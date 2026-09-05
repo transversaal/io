@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transversaal Logo Reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+
+  .tv-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .tv-stage {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 900 / 615;
+    cursor: pointer;
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tv-logo {
+    position: absolute;
+    width: 60cqw;
+    left: 20cqw;
+    top: 16cqw;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity .45s ease, transform .5s ease;
+  }
+  .tv-stage:hover .tv-logo,
+  .tv-stage.is-open .tv-logo { opacity: .13; transform: scale(.9); }
+
+  .tv-item {
+    position: absolute;
+    width: 14cqw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease, transform .6s cubic-bezier(.25,.9,.3,1.35);
+  }
+  .tv-stage:hover .tv-item,
+  .tv-stage.is-open .tv-item {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    pointer-events: auto;
+  }
+
+  .tv-item:nth-child(2) { transition-delay: 0ms; }
+  .tv-item:nth-child(3) { transition-delay: 70ms; }
+  .tv-item:nth-child(4) { transition-delay: 140ms; }
+  .tv-item:nth-child(5) { transition-delay: 210ms; }
+
+  .tv-tl { left: 9.333cqw;  top: 7.333cqw;  transform: translate(33.667cqw, 19cqw) scale(.2); }
+  .tv-tr { left: 76.667cqw; top: 7.333cqw;  transform: translate(-33.667cqw, 19cqw) scale(.2); }
+  .tv-bl { left: 9.333cqw;  top: 47.333cqw; transform: translate(33.667cqw, -21cqw) scale(.2); }
+  .tv-br { left: 76.667cqw; top: 47.333cqw; transform: translate(-33.667cqw, -21cqw) scale(.2); }
+
+  .tv-disc {
+    width: 14cqw;
+    height: 14cqw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(216,64,26,.07);
+    transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .tv-item:hover .tv-disc {
+    transform: scale(1.12);
+    background: rgba(216,64,26,.15);
+    box-shadow: 0 1.55cqw 4cqw rgba(216,64,26,.2);
+  }
+  .tv-disc img { width: 8.889cqw; height: 8.889cqw; object-fit: contain; }
+
+  .tv-label {
+    margin-top: 1.556cqw;
+    font-size: 2.111cqw;
+    font-weight: 600;
+    letter-spacing: .02em;
+    color: #c0360f;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tv-logo, .tv-item, .tv-disc { transition-duration: .01ms; }
+  }
+</style>
+</head>
+<body>
+<div class="tv-wrap">
+  <div class="tv-stage" id="tvStage">
+    <img class="tv-logo" src="assets/logo.png" alt="Transversaal">
+
+    <a class="tv-item tv-tl" href="https://www.transversaal.io/agency" target="_blank" rel="noopener">
+      <span class="tv-disc"><img src="assets/icon-tv.png" alt=""></span>
+      <span class="tv-label">Agency</span>
+    </a>
+    <a class="tv-item tv-tr" href="https://www.transversaal.io/network" target="_blank" rel="noopener">
+      <span class="tv-disc"><img src="assets/icon-network.png" alt=""></span>
+      <span class="tv-label">Network</span>
+    </a>
+    <a class="tv-item tv-bl" href="https://www.transversaal.io/experiential" target="_blank" rel="noopener">
+      <span class="tv-disc"><img src="assets/icon-experiential.png" alt=""></span>
+      <span class="tv-label">Experiential</span>
+    </a>
+    <a class="tv-item tv-br" href="https://www.transversaal.io/ai" target="_blank" rel="noopener">
+      <span class="tv-disc"><img src="assets/icon-ai.png" alt=""></span>
+      <span class="tv-label">AI</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var stage = document.getElementById('tvStage');
+    if (!stage) return;
+    stage.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      stage.classList.toggle('is-open');
+    });
+  })();
+</script>
+</body>
+</html>
