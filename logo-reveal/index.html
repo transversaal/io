@@ -37,12 +37,16 @@
     z-index: 1;
     pointer-events: none;
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     transition: opacity .45s ease, transform .5s ease;
   }
+  /* Open: glide down so the logo sits at the centre of the icon triangle. */
   .tv-stage:hover .tv-logo,
-  .tv-stage.is-open .tv-logo { opacity: .13; transform: scale(.9); }
+  .tv-stage.is-open .tv-logo { opacity: .13; transform: translateY(6.333cqw) scale(.9); }
 
+  /* Triangle: Network sits above the logo, Agency and Experiential at the
+     lower corners. All start stacked at the stage centre; Network rises
+     first, then the lower pair drops out in mirror. */
   .tv-item {
     position: absolute;
     width: 14cqw;
@@ -62,15 +66,9 @@
     pointer-events: auto;
   }
 
-  .tv-item:nth-child(2) { transition-delay: 0ms; }
-  .tv-item:nth-child(3) { transition-delay: 70ms; }
-  .tv-item:nth-child(4) { transition-delay: 140ms; }
-  .tv-item:nth-child(5) { transition-delay: 210ms; }
-
-  .tv-tl { left: 9.333cqw;  top: 7.333cqw;  transform: translate(33.667cqw, 19cqw) scale(.2); }
-  .tv-tr { left: 76.667cqw; top: 7.333cqw;  transform: translate(-33.667cqw, 19cqw) scale(.2); }
-  .tv-bl { left: 9.333cqw;  top: 47.333cqw; transform: translate(33.667cqw, -21cqw) scale(.2); }
-  .tv-br { left: 76.667cqw; top: 47.333cqw; transform: translate(-33.667cqw, -21cqw) scale(.2); }
+  .tv-t  { left: 43cqw;     top: 3.222cqw;  transform: translate(0, 23.111cqw) scale(.2);          transition-delay: 0ms;  }
+  .tv-bl { left: 10.778cqw; top: 44.333cqw; transform: translate(32.222cqw, -18cqw) scale(.2);     transition-delay: 80ms; }
+  .tv-br { left: 75.222cqw; top: 44.333cqw; transform: translate(-32.222cqw, -18cqw) scale(.2);    transition-delay: 80ms; }
 
   .tv-disc {
     width: 14cqw;
@@ -82,11 +80,13 @@
     background: rgba(216,64,26,.07);
     transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
   }
-  .tv-item:hover .tv-disc {
+  .tv-item:hover .tv-disc,
+  .tv-item:focus-visible .tv-disc {
     transform: scale(1.12);
     background: rgba(216,64,26,.15);
     box-shadow: 0 1.55cqw 4cqw rgba(216,64,26,.2);
   }
+  .tv-item:focus-visible { outline: none; }
   .tv-disc img { width: 8.889cqw; height: 8.889cqw; object-fit: contain; }
 
   .tv-label {
@@ -108,21 +108,17 @@
   <div class="tv-stage" id="tvStage">
     <img class="tv-logo" src="assets/logo.png" alt="Transversaal">
 
-    <a class="tv-item tv-tl" href="https://www.transversaal.io/agency" target="_blank" rel="noopener">
+    <a class="tv-item tv-bl" href="https://www.transversaal.io/agency" target="_blank" rel="noopener">
       <span class="tv-disc"><img src="assets/icon-tv.png" alt=""></span>
       <span class="tv-label">Agency</span>
     </a>
-    <a class="tv-item tv-tr" href="https://www.transversaal.io/network" target="_blank" rel="noopener">
+    <a class="tv-item tv-t" href="https://www.transversaal.io/network" target="_blank" rel="noopener">
       <span class="tv-disc"><img src="assets/icon-network.png" alt=""></span>
       <span class="tv-label">Network</span>
     </a>
-    <a class="tv-item tv-bl" href="https://www.transversaal.io/experiential" target="_blank" rel="noopener">
+    <a class="tv-item tv-br" href="https://www.transversaal.io/experiential" target="_blank" rel="noopener">
       <span class="tv-disc"><img src="assets/icon-experiential.png" alt=""></span>
       <span class="tv-label">Experiential</span>
-    </a>
-    <a class="tv-item tv-br" href="https://www.transversaal.io/artificial-intelligence" target="_blank" rel="noopener">
-      <span class="tv-disc"><img src="assets/icon-ai.png" alt=""></span>
-      <span class="tv-label">AI</span>
     </a>
   </div>
 </div>
