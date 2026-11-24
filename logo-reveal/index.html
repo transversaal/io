@@ -18,6 +18,7 @@
     padding: 0;
   }
 
+  /* Same 900 x 615 stage as before, so existing embeds keep their size. */
   .tv-stage {
     container-type: inline-size;
     position: relative;
@@ -29,6 +30,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Logo stays fully visible; on rollover it lifts slightly to make room. */
   .tv-logo {
     position: absolute;
     width: 60cqw;
@@ -36,70 +38,76 @@
     top: 16cqw;
     z-index: 1;
     pointer-events: none;
-    opacity: 1;
     transform: translateY(0) scale(1);
-    transition: opacity .45s ease, transform .5s ease;
+    transition: transform .6s cubic-bezier(.22,.8,.3,1);
   }
-  /* Open: glide down so the logo sits at the centre of the icon triangle. */
   .tv-stage:hover .tv-logo,
-  .tv-stage.is-open .tv-logo { opacity: .13; transform: translateY(6.333cqw) scale(.9); }
+  .tv-stage.is-open .tv-logo { transform: translateY(-3.333cqw) scale(.95); }
 
-  /* Triangle: Network sits above the logo, Agency and Experiential at the
-     lower corners. All start stacked at the stage centre; Network rises
-     first, then the lower pair drops out in mirror. */
-  .tv-item {
+  /* ENTER NETWORK link rises in underneath the logo. */
+  .tv-enter {
     position: absolute;
-    width: 14cqw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
+    left: 50%;
+    top: 52.222cqw;
     z-index: 5;
+    display: block;
+    /* Only the words are centred. The left padding balances the tracking
+       after the last letter; the arrow hangs outside the box (below). */
+    padding: .889cqw 0 .889cqw .22em;
+    line-height: 1.2;
+    font-size: 2.444cqw;
+    font-weight: 600;
+    letter-spacing: .22em;
+    color: #c0360f;
+    text-decoration: none;
+    white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .5s ease, transform .6s cubic-bezier(.25,.9,.3,1.35);
+    transform: translate(-50%, 1.778cqw);
+    transition: opacity .45s ease .12s, transform .6s cubic-bezier(.25,.9,.3,1.2) .12s;
   }
-  .tv-stage:hover .tv-item,
-  .tv-stage.is-open .tv-item {
+  .tv-stage:hover .tv-enter,
+  .tv-stage.is-open .tv-enter {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
     pointer-events: auto;
+    transform: translate(-50%, 0);
   }
 
-  .tv-t  { left: 43cqw;     top: 3.222cqw;  transform: translate(0, 23.111cqw) scale(.2);          transition-delay: 0ms;  }
-  .tv-bl { left: 10.778cqw; top: 44.333cqw; transform: translate(32.222cqw, -18cqw) scale(.2);     transition-delay: 80ms; }
-  .tv-br { left: 75.222cqw; top: 44.333cqw; transform: translate(-32.222cqw, -18cqw) scale(.2);    transition-delay: 80ms; }
+  /* Underline draws in from the centre once the link has arrived. */
+  .tv-enter::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: .222cqw;
+    min-height: 1px;
+    background: currentColor;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform .45s cubic-bezier(.22,.8,.3,1) 0s;
+  }
+  .tv-stage:hover .tv-enter::after,
+  .tv-stage.is-open .tv-enter::after {
+    transform: translateX(-50%) scaleX(1);
+    transition-delay: .35s;
+  }
 
-  .tv-disc {
-    width: 14cqw;
-    height: 14cqw;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(216,64,26,.07);
-    transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+  .tv-arrow {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-left: .889cqw;
+    letter-spacing: 0;
+    transform: translateY(-50%);
+    transition: transform .25s ease;
   }
-  .tv-item:hover .tv-disc,
-  .tv-item:focus-visible .tv-disc {
-    transform: scale(1.12);
-    background: rgba(216,64,26,.15);
-    box-shadow: 0 1.55cqw 4cqw rgba(216,64,26,.2);
-  }
-  .tv-item:focus-visible { outline: none; }
-  .tv-disc img { width: 8.889cqw; height: 8.889cqw; object-fit: contain; }
-
-  .tv-label {
-    margin-top: 1.556cqw;
-    font-size: 2.111cqw;
-    font-weight: 600;
-    letter-spacing: .02em;
-    color: #c0360f;
-    white-space: nowrap;
-  }
+  .tv-enter:hover .tv-arrow,
+  .tv-enter:focus-visible .tv-arrow { transform: translate(.889cqw, -50%); }
+  .tv-enter:hover,
+  .tv-enter:focus-visible { color: #9e2a08; outline: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    .tv-logo, .tv-item, .tv-disc { transition-duration: .01ms; }
+    .tv-logo, .tv-enter, .tv-enter::after, .tv-arrow { transition-duration: .01ms; transition-delay: 0s; }
   }
 </style>
 </head>
@@ -107,18 +115,8 @@
 <div class="tv-wrap">
   <div class="tv-stage" id="tvStage">
     <img class="tv-logo" src="assets/logo.png" alt="Transversaal">
-
-    <a class="tv-item tv-bl" href="https://www.transversaal.io/agency" target="_blank" rel="noopener">
-      <span class="tv-disc"><img src="assets/icon-tv.png" alt=""></span>
-      <span class="tv-label">Agency</span>
-    </a>
-    <a class="tv-item tv-t" href="https://www.transversaal.io/network" target="_blank" rel="noopener">
-      <span class="tv-disc"><img src="assets/icon-network.png" alt=""></span>
-      <span class="tv-label">Network</span>
-    </a>
-    <a class="tv-item tv-br" href="https://www.transversaal.io/experiential" target="_blank" rel="noopener">
-      <span class="tv-disc"><img src="assets/icon-experiential.png" alt=""></span>
-      <span class="tv-label">Experiential</span>
+    <a class="tv-enter" href="https://www.transversaal.io/network" target="_top">
+      ENTER NETWORK<span class="tv-arrow" aria-hidden="true">&rarr;</span>
     </a>
   </div>
 </div>
